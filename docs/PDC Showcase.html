@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkriptPDC API v2.0 - Docs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .version {
+            color: #666;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .tagline {
+            color: #888;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            white-space: pre;
+        }
+
+        .code-block .comment {
+            color: #5c6370;
+        }
+
+        .code-block .keyword {
+            color: #c678dd;
+        }
+
+        .code-block .string {
+            color: #98c379;
+        }
+
+        .code-block .number {
+            color: #d19a66;
+        }
+
+        .syntax {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #764ba2;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .badge-expression {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .badge-condition {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .badge-effect {
+            background: #ef4444;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .example-title {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .example-title::before {
+            content: "💡";
+            font-size: 1.3em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95em;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .type-badge {
+            font-size: 0.8em;
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            color: #374151;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SkriptPDC API</h1>
+            <div class="version">Version 2.0</div>
+            <div class="tagline">Advanced Persistent Data Container API for Skript</div>
+        </header>
+
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#installation">Installation</a>
+            <a href="#expressions">Expressions</a>
+            <a href="#conditions">Conditions</a>
+            <a href="#effects">Effects</a>
+            <a href="#examples">Examples</a>
+            <a href="#datatypes">Data Types</a>
+            <a href="#testing">Testing</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="section">
+            <h2>📚 Overview</h2>
+            <p>SkriptPDC is a powerful addon for Skript that provides comprehensive support for Minecraft's Persistent Data Container (PDC) system. Store custom data on items, blocks, and entities with automatic type detection and easy-to-use syntax.</p>
+            
+            <h3>What's New in v2.0?</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🎯 Auto Type Detection</h4>
+                    <p>Automatically detects and handles Integer, Double, Float, Long, Byte, and String types.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📋 List All Tags</h4>
+                    <p>Retrieve all PDC keys from any object with a single expression.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>✓ Tag Checking</h4>
+                    <p>New conditions to check if tags exist or if PDC is empty.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🧹 Clean Operations</h4>
+                    <p>Clear all or specific PDC tags with easy-to-use effects.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>➕ Math Operations</h4>
+                    <p>Add and remove numeric values directly from PDC tags.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Performance</h4>
+                    <p>Optimized code for faster operations and better error handling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTALLATION -->
+        <section id="installation" class="section">
+            <h2>🚀 Installation & Setup</h2>
+            <p>Installing SkriptPDC is quick and easy. Follow these steps:</p>
+            <ol style="margin-left: 20px; margin-top: 15px;">
+                <li style="margin-bottom: 10px;"><strong>Download:</strong> Get the latest version of <a href="#" target="_blank">SkriptPDC.jar</a>.</li>
+                <li style="margin-bottom: 10px;"><strong>Install:</strong> Place the downloaded `.jar` file into your server's <code>/plugins/</code> directory.</li>
+                <li style="margin-bottom: 10px;"><strong>Restart:</strong> Restart your server completely.</li>
+                <li style="margin-bottom: 10px;"><strong>Verify:</strong> Check your server console for the startup message:</li>
+            </ol>
+            <div class="code-block"><span class="comment">[SkriptPDC] SkriptPDC-API v2.0 Enabled</span></div>
+            <p><strong>Dependencies:</strong> You must have <a href="https://github.com/SkriptLang/Skript/releases" target="_blank">Skript</a> installed on your server.</p>
+        </section>
+
+        <!-- EXPRESSIONS -->
+        <section id="expressions" class="section">
+            <h2>📝 Expressions</h2>
+
+            <h3><span class="badge badge-expression">Expression</span> PDC Tag</h3>
+            <div class="syntax">
+                pdc tag %string% of %itemtypes/blocks/entities%
+            </div>
+            <p><strong>Description:</strong> Gets or sets a PDC tag value with automatic type detection. Supports GET, SET, DELETE, ADD, and REMOVE operations.</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Set different data types</span>
+<span class="keyword">set</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool <span class="keyword">to</span> <span class="number">5</span>
+<span class="keyword">set</span> pdc tag <span class="string">"myplugin:name"</span> of player's tool <span class="keyword">to</span> <span class="string">"Legendary Sword"</span>
+<span class="keyword">set</span> pdc tag <span class="string">"myplugin:damage"</span> of player's tool <span class="keyword">to</span> <span class="number">12.5</span>
+
+<span class="comment"># Get values</span>
+<span class="keyword">set</span> {_level} <span class="keyword">to</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool
+<span class="keyword">send</span> <span class="string">"Item level: %{_level}%"</span>
+
+<span class="comment"># Delete tag</span>
+<span class="keyword">delete</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool</div>
+            </div>
+
+            <h3><span class="badge badge-expression">Expression</span> All PDC Tags</h3>
+            <div class="syntax">
+                [all] [the] pdc tag[s] of %itemtypes/blocks/entities%
+            </div>
+            <p><strong>Description:</strong> Returns a list of all PDC tag keys present on an object.</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Get all tags</span>
+<span class="keyword">set</span> {_tags::*} <span class="keyword">to</span> all pdc tags of player's tool
+<span class="keyword">send</span> <span class="string">"This item has %size of {_tags::*}% tags"</span>
+
+<span class="comment"># Loop through all tags</span>
+<span class="keyword">loop</span> all pdc tags of player's tool:
+    <span class="keyword">set</span> {_value} <span class="keyword">to</span> pdc tag loop-value of player's tool
+    <span class="keyword">send</span> <span class="string">"%loop-value%: %{_value}%"</span></div>
+            </div>
+        </section>
+
+        <!-- CONDITIONS -->
+        <section id="conditions" class="section">
+            <h2>✓ Conditions</h2>
+
+            <h3><span class="badge badge-condition">Condition</span> Has PDC Tag</h3>
+            <div class="syntax">
+                %itemtype/block/entity% has pdc [tag] %string%<br>
+                %itemtype/block/entity% doesn't have pdc [tag] %string%
+            </div>
+            <p><strong>Description:</strong> Checks if an object has a specific PDC tag.</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Check if tag exists</span>
+<span class="keyword">if</span> player's tool has pdc tag <span class="string">"myplugin:special"</span>:
+    <span class="keyword">send</span> <span class="string">"This is a special item!"</span>
+
+<span class="comment"># Negative check</span>
+<span class="keyword">if</span> player's tool doesn't have pdc tag <span class="string">"myplugin:cursed"</span>:
+    <span class="keyword">send</span> <span class="string">"This item is not cursed"</span></div>
+            </div>
+
+            <h3><span class="badge badge-condition">Condition</span> PDC Is Empty</h3>
+            <div class="syntax">
+                [the] pdc of %itemtype/block/entity% is empty<br>
+                [the] pdc of %itemtype/block/entity% isn't empty
+            </div>
+            <p><strong>Description:</strong> Checks if an object's PDC is empty (contains no tags).</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Check if empty</span>
+<span class="keyword">if</span> pdc of player's tool <span class="keyword">is</span> empty:
+    <span class="keyword">send</span> <span class="string">"This item has no custom data"</span>
+
+<span class="comment"># Check if not empty</span>
+<span class="keyword">if</span> pdc of clicked block isn't empty:
+    <span class="keyword">send</span> <span class="string">"This block contains custom data"</span></div>
+            </div>
+        </section>
+
+        <!-- EFFECTS -->
+        <section id="effects" class="section">
+            <h2>⚙️ Effects</h2>
+
+            <h3><span class="badge badge-effect">Effect</span> Clear PDC</h3>
+            <div class="syntax">
+                clear [all] pdc (of|from) %itemtypes/blocks/entities%
+            </div>
+            <p><strong>Description:</strong> Removes all PDC tags from an object.</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Clear all tags from item</span>
+<span class="keyword">clear</span> all pdc of player's tool
+
+<span class="comment"># Clear block data</span>
+<span class="keyword">clear</span> pdc from clicked block</div>
+            </div>
+
+            <h3><span class="badge badge-effect">Effect</span> Remove PDC Tags</h3>
+            <div class="syntax">
+                (remove|delete) pdc tag[s] %strings% (of|from) %itemtypes/blocks/entities%
+            </div>
+            <p><strong>Description:</strong> Removes one or more specific PDC tags from an object.</p>
+            
+            <div class="example-box">
+                <div class="example-title">Examples</div>
+                <div class="code-block"><span class="comment"># Remove single tag</span>
+<span class="keyword">remove</span> pdc tag <span class="string">"myplugin:temp"</span> of player's tool
+
+<span class="comment"># Remove multiple tags</span>
+<span class="keyword">remove</span> pdc tags <span class="string">"myplugin:level"</span>, <span class="string">"myplugin:exp"</span> and <span class="string">"myplugin:kills"</span> of player's tool</div>
+            </div>
+        </section>
+
+        <!-- EXAMPLES -->
+        <section id="examples" class="section">
+            <h2>💡 Usage Examples</h2>
+
+            <h3>Example 1: Item Leveling System</h3>
+            <div class="code-block"><span class="comment"># Create leveling item</span>
+<span class="keyword">command</span> /levelitem:
+    <span class="keyword">trigger</span>:
+        <span class="keyword">give</span> player diamond sword named <span class="string">"&6Legendary Sword"</span>
+        <span class="keyword">set</span> pdc tag <span class="string">"weapon:level"</span> of player's tool <span class="keyword">to</span> <span class="number">1</span>
+        <span class="keyword">set</span> pdc tag <span class="string">"weapon:exp"</span> of player's tool <span class="keyword">to</span> <span class="number">0</span>
+
+<span class="comment"># Gain experience on kill</span>
+<span class="keyword">on</span> death:
+    <span class="keyword">if</span> attacker's tool has pdc tag <span class="string">"weapon:level"</span>:
+        <span class="keyword">add</span> <span class="number">25</span> <span class="keyword">to</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool
+        
+        <span class="comment"># Check for level up</span>
+        <span class="keyword">set</span> {_exp} <span class="keyword">to</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool
+        <span class="keyword">set</span> {_level} <span class="keyword">to</span> pdc tag <span class="string">"weapon:level"</span> of attacker's tool
+        <span class="keyword">if</span> {_exp} >= {_level} * <span class="number">100</span>:
+            <span class="keyword">add</span> <span class="number">1</span> <span class="keyword">to</span> pdc tag <span class="string">"weapon:level"</span> of attacker's tool
+            <span class="keyword">set</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool <span class="keyword">to</span> <span class="number">0</span>
+            <span class="keyword">send</span> <span class="string">"&aLevel Up!"</span> <span class="keyword">to</span> attacker</div>
+
+<h3>Example 2: Soulbound Items</h3>
+            <div class="code-block"><span class="comment"># Command to bind an item to the player</span>
+<span class="keyword">command</span> /soulbind:
+    <span class="keyword">trigger</span>:
+        <span class="keyword">if</span> player's tool is air:
+            <span class="keyword">send</span> <span class="string">"&cYou must hold an item to soulbind it!"</span>
+            <span class="keyword">stop</span>
+        
+        <span class="keyword">if</span> player's tool has pdc tag <span class="string">"soulbound:owner"</span>:
+            <span class="keyword">send</span> <span class="string">"&cThis item is already soulbound!"</span>
+            <span class="keyword">stop</span>
+            
+        <span class="keyword">set</span> pdc tag <span class="string">"soulbound:owner"</span> of player's tool <span class="keyword">to</span> player's uuid
+        <span class="keyword">add</span> <span class="string">"&dSoulbound to %player%"</span> to lore of player's tool
+        <span class="keyword">send</span> <span class="string">"&aYour item is now soulbound to you!"</span>
+
+<span class="comment"># Prevent other players from picking up a soulbound item</span>
+<span class="keyword">on</span> pickup:
+    <span class="keyword">if</span> event-item has pdc tag <span class="string">"soulbound:owner"</span>:
+        <span class="keyword">set</span> {_ownerUUID} <span class="keyword">to</span> pdc tag <span class="string">"soulbound:owner"</span> of event-item
+        <span class="keyword">if</span> player's uuid <span class="keyword">is not</span> {_ownerUUID}:
+            <span class="keyword">send</span> <span class="string">"&cThis item is soulbound to another player."</span>
+            <span class="keyword">cancel event</span></div>
+        </section>
+        <!-- DATA TYPES -->
+        <section id="datatypes" class="section">
+            <h2>💾 Supported Data Types</h2>
+            <p>SkriptPDC intelligently handles data types for you. When you set a tag, the addon automatically detects the type and stores it using the most appropriate format. When you retrieve the tag, it's returned as the correct Skript type.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Skript Equivalent</th>
+                        <th>Example Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>String</td>
+                        <td><span class="type-badge">text</span></td>
+                        <td><code>"Hello World"</code></td>
+                    </tr>
+                    <tr>
+                        <td>Integer</td>
+                        <td><span class="type-badge">integer</span></td>
+                        <td><code>42</code></td>
+                    </tr>
+                    <tr>
+                        <td>Double / Float</td>
+                        <td><span class="type-badge">number</span></td>
+                        <td><code>3.14159</code></td>
+                    </tr>
+                    <tr>
+                        <td>Long</td>
+                        <td><span class="type-badge">number</span></td>
+                        <td><code>999999999</code></td>
+                    </tr>
+                    <tr>
+                        <td>Byte</td>
+                        <td><span class="type-badge">number</span></td>
+                        <td><code>127</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Complex Data Types</h3>
+            <p>For any other Skript data type (like <span class="type-badge">location</span>, <span class="type-badge">itemstack</span>, <span class="type-badge">player</span>, etc.), SkriptPDC will use Skript's built-in serialization system. This converts the object into text, stores it, and deserializes it back into an object when you retrieve it.</p>
+            <div class="code-block"><span class="comment"># Storing a location</span>
+<span class="keyword">set</span> pdc tag <span class="string">"homes:home1"</span> of player <span class="keyword">to</span> player's location
+<span class="comment"># ... later</span>
+<span class="keyword">set</span> {_home} <span class="keyword">to</span> pdc tag <span class="string">"homes:home1"</span> of player
+<span class="keyword">teleport</span> player <span class="keyword">to</span> {_home}</div>
+        </section>
+
+        <!-- TESTING -->
+        <section id="testing" class="section">
+            <h2>🔬 Testing & Debugging</h2>
+            <p>To help you get started and verify that everything is working correctly, you can use the provided <a href="#">pdctest.sk</a>. This file contains a suite of commands to test all features of the addon and monitor PDC data in real-time.</p>
+            
+            <h3>Test Suite Command</h3>
+            <p>The <code>/pdctest</code> command allows you to run various tests on an item you are holding.</p>
+            <div class="code-block"><span class="keyword">command</span> /pdctest [<text>]:
+    <span class="comment"># ...</span>
+    <span class="string">/pdctest all</span> - Run all tests
+    <span class="string">/pdctest types</span> - Test different data types
+    <span class="string">/pdctest conditions</span> - Test conditions
+    <span class="string">/pdctest effects</span> - Test effects
+    <span class="string">/pdctest math</span> - Test math operations
+    <span class="string">/pdctest cleanup</span> - Clean up all test tags</div>
+
+            <h3>PDC Monitor Command</h3>
+            <p>The <code>/pdcmonitor</code> command is an incredibly useful tool for debugging. Hold an item in your hand and run the command to see all of its PDC tags, values, and data types.</p>
+            <div class="example-box">
+                <div class="example-title">/pdcmonitor Output Example</div>
+                <div class="code-block">
+&6&l════════════════════════════════
+&e&lPDC Monitor - Current Data
+&6&l════════════════════════════════
+
+&eTag count: &f2
+
+&eAll tags:
+  &7• &eweapon:level
+    &7└─ &fValue: 5
+    &7└─ &fType: integer
+
+  &7• &eweapon:name
+    &7└─ &fValue: Legendary Sword
+    &7└─ &fType: text
+
+&6&l════════════════════════════════
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="section">
+            <h2>❓ FAQ & Troubleshooting</h2>
+
+            <h3>My PDC data on an item isn't saving! Why?</h3>
+            <p>This is a common issue related to how Minecraft handles item data (ItemMeta). When you modify an item's data, you are modifying a copy. You need to apply that copy back to the original item slot. SkriptPDC handles this for you when using <code>player's tool</code>, but if you're manipulating items in variables or inventories, you may need to manually update it.</p>
+            <div class="code-block"><span class="comment"># Correct way to update an item in a specific slot</span>
+<span class="keyword">set</span> {_item} <span class="keyword">to</span> slot 0 of player's inventory
+<span class="keyword">set</span> pdc tag <span class="string">"myplugin:tag"</span> of {_item} <span class="keyword">to</span> <span class="string">"value"</span>
+<span class="keyword">set</span> slot 0 of player's inventory <span class="keyword">to</span> {_item} <span class="comment"># This line is crucial!</span></div>
+
+            <h3>What format should my tag string be?</h3>
+            <p>Tags must be in the format <code>namespace:key</code>. For example, <code>myplugin:level</code>. The namespace (<code>myplugin</code>) prevents conflicts with other plugins. The key (<code>level</code>) is the specific name of your data. Using a unique namespace for your server or plugin is highly recommended.</p>
+
+            <h3>Can I store complex objects like a player or a location?</h3>
+            <p>Yes. As mentioned in the Data Types section, SkriptPDC will automatically serialize any Skript type it doesn't handle natively. However, be aware that this stores a "snapshot" of the data at that moment. For things like players, it is often better to store their UUID as a string and retrieve the player object later.
+            </p>
+        </section>
+
+        <footer>
+            <p>SkriptPDC API v2.0 - Created with ❤️ by Fendi</p>
+        </footer>
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
