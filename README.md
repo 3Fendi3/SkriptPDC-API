@@ -18,9 +18,9 @@ SkriptPDC is a powerful addon for Skript that provides comprehensive support for
 
 ### Key Features
 *   **🎯 Auto Type Detection**: Automatically detects and handles Integer, Double, Float, Long, Byte, and String types.
-*   ** complex Types**: Serializes and deserializes any other Skript type like `location`, `itemstack`, etc.
+*   **🍁 Complex Types**: Serializes and deserializes any other Skript type like `location`, `itemstack`, etc.
 *   **📋 List All Tags**: Retrieve all PDC keys from any object with a single expression.
-*   ** inventory Support**: Store temporary data directly on custom inventories (GUIs).
+*   **🌂 Inventory Support**: Store temporary data directly on custom inventories (GUIs).
 *   **➕ Math Operations**: Add and remove numeric values directly from PDC tags.
 *   **🧹 Clean Operations**: Clear all or specific PDC tags with easy-to-use effects.
 *   **⚡ Performance**: Optimized code for fast and reliable data manipulation.
