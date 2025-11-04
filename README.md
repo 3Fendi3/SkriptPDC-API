@@ -255,7 +255,7 @@ set slot 0 of player's inventory to {_item} # This line is crucial!
 Tags should ideally be in the format `namespace:key` (e.g., `myplugin:level`). The namespace prevents conflicts with other plugins. If you provide a key without a namespace (e.g., `"level"`), SkriptPDC will automatically use your plugin's name as the namespace.
 
 ### Can I store data on inventories permanently?
-No. The inventory PDC support is designed for storing **temporary** data on GUIs while they are open. All PDC data associated with an inventory is automatically cleared from memory when the inventory is closed to prevent memory leaks.
+No. The inventory PDC support is designed for storing **temporary** data on GUIs while they are open. All PDC data associated with an inventory is automatically cleared from memory when the inventory is closed.
 
 ---
 
