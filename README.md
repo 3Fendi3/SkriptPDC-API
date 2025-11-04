@@ -161,7 +161,8 @@ remove pdc tags "myplugin:level", "myplugin:exp" and "myplugin:kills" of player'
 
 ## 💡 Usage Examples
 
-### Example 1: Item Leveling System```skript
+### Example 1: Item Leveling System
+```skript
 # Create leveling item
 command /levelitem:
     trigger:
