@@ -261,4 +261,3 @@ No. The inventory PDC support is designed for storing **temporary** data on GUIs
 <p align="center">
   SkriptPDC API v2.1 - Created by Fendi
 </p>
-```
