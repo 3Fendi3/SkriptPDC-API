@@ -1,0 +1,6 @@
+name: SkriptPDC-API
+version: '1.0'
+main: me.fendi.skriptPDCAPI.SkriptPDC
+api-version: '1.21'
+authors: [ Fendi ]
+depend: [Skript]
