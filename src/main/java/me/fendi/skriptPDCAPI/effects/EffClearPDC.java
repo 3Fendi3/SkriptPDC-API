@@ -16,8 +16,8 @@ public class EffClearPDC extends Effect {
 
     static {
         Skript.registerEffect(EffClearPDC.class,
-                "clear [all] pdc (of|from) %itemtypes/blocks/entities%",
-                "(remove|delete) pdc tag[s] %strings% (of|from) %itemtypes/blocks/entities%");
+                "clear [all] pdc (of|from) %objects%",
+                "(remove|delete) pdc tag[s] %strings% (of|from) %objects%");
     }
 
     private Expression<Object> holders;
@@ -35,7 +35,6 @@ public class EffClearPDC extends Effect {
             tags = (Expression<String>) expressions[0];
             holders = (Expression<Object>) expressions[1];
         }
-
         return true;
     }
 
@@ -53,7 +52,7 @@ public class EffClearPDC extends Effect {
                 } else {
                     for (String tagName : tags.getArray(event)) {
                         if (tagName == null) continue;
-                        NamespacedKey key = NamespacedKey.fromString(tagName);
+                        NamespacedKey key = PDCUtils.createKey(tagName);
                         if (key != null) {
                             container.remove(key);
                         }

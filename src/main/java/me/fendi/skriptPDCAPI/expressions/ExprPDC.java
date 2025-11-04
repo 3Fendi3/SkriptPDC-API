@@ -1,8 +1,10 @@
 package me.fendi.skriptPDCAPI.expressions;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
-import ch.njol.skript.expressions.base.PropertyExpression;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.Kleenean;
@@ -20,32 +22,34 @@ import java.util.List;
 
 import static ch.njol.util.StringUtils.hexStringToByteArray;
 
-public class ExprPDC extends PropertyExpression<Object, Object> {
+public class ExprPDC extends SimpleExpression<Object> {
 
     static {
-        register(ExprPDC.class, Object.class, "pdc tag %string%", "itemtypes/blocks/entities");
+        Skript.registerExpression(ExprPDC.class, Object.class, ExpressionType.COMBINED,
+                "pdc tag %string% of %objects%");
     }
 
     private Expression<String> tag;
+    private Expression<Object> holders;
 
     @Override
     @SuppressWarnings("unchecked")
     public boolean init(Expression<?>[] expressions, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
         tag = (Expression<String>) expressions[0];
-        setExpr(expressions[1]);
+        holders = (Expression<Object>) expressions[1];
         return true;
     }
 
     @Override
-    protected Object[] get(Event event, Object[] source) {
+    protected Object[] get(Event event) {
         String tagName = tag.getSingle(event);
         if (tagName == null) return new Object[0];
 
-        NamespacedKey key = NamespacedKey.fromString(tagName);
+        NamespacedKey key = PDCUtils.createKey(tagName);
         if (key == null) return new Object[0];
 
         List<Object> values = new ArrayList<>();
-        for (Object holder : source) {
+        for (Object holder : holders.getArray(event)) {
             if (holder == null) continue;
 
             PersistentDataContainer container = PDCUtils.getContainer(holder);
@@ -56,8 +60,22 @@ public class ExprPDC extends PropertyExpression<Object, Object> {
                 }
             }
         }
-
         return values.toArray(new Object[0]);
+    }
+
+    @Override
+    public boolean isSingle() {
+        return holders.isSingle();
+    }
+
+    @Override
+    public Class<?> getReturnType() {
+        return Object.class;
+    }
+
+    @Override
+    public String toString(@Nullable Event event, boolean debug) {
+        return "pdc tag " + tag.toString(event, debug) + " of " + holders.toString(event, debug);
     }
 
     @Override
@@ -73,10 +91,10 @@ public class ExprPDC extends PropertyExpression<Object, Object> {
         String tagName = tag.getSingle(event);
         if (tagName == null) return;
 
-        NamespacedKey key = NamespacedKey.fromString(tagName);
+        NamespacedKey key = PDCUtils.createKey(tagName);
         if (key == null) return;
 
-        for (Object holder : getExpr().getArray(event)) {
+        for (Object holder : holders.getArray(event)) {
             if (holder == null) continue;
 
             PDCUtils.editPersistentDataContainer(holder, container -> {
@@ -120,27 +138,21 @@ public class ExprPDC extends PropertyExpression<Object, Object> {
                 return deserialized != null ? deserialized : stringValue;
             }
         }
-
         if (container.has(key, PersistentDataType.INTEGER)) {
             return container.get(key, PersistentDataType.INTEGER);
         }
-
         if (container.has(key, PersistentDataType.DOUBLE)) {
             return container.get(key, PersistentDataType.DOUBLE);
         }
-
         if (container.has(key, PersistentDataType.LONG)) {
             return container.get(key, PersistentDataType.LONG);
         }
-
         if (container.has(key, PersistentDataType.FLOAT)) {
             return container.get(key, PersistentDataType.FLOAT);
         }
-
         if (container.has(key, PersistentDataType.BYTE)) {
             return container.get(key, PersistentDataType.BYTE);
         }
-
         return null;
     }
 
@@ -160,16 +172,6 @@ public class ExprPDC extends PropertyExpression<Object, Object> {
         } else {
             container.set(key, PersistentDataType.STRING, serialize(value));
         }
-    }
-
-    @Override
-    public Class<?> getReturnType() {
-        return Object.class;
-    }
-
-    @Override
-    public String toString(@Nullable Event event, boolean debug) {
-        return "pdc tag " + tag.toString(event, debug) + " of " + getExpr().toString(event, debug);
     }
 
     private @NotNull String serialize(Object object) {

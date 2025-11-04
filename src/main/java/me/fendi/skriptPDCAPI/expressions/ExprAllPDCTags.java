@@ -1,7 +1,9 @@
 package me.fendi.skriptPDCAPI.expressions;
 
-import ch.njol.skript.expressions.base.PropertyExpression;
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import me.fendi.skriptPDCAPI.utils.PDCUtils;
@@ -13,23 +15,26 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ExprAllPDCTags extends PropertyExpression<Object, String> {
+public class ExprAllPDCTags extends SimpleExpression<String> {
 
     static {
-        register(ExprAllPDCTags.class, String.class, "[all] [the] pdc tag[s]", "itemtypes/blocks/entities");
+        Skript.registerExpression(ExprAllPDCTags.class, String.class, ExpressionType.COMBINED,
+                "[all] [the] pdc tag[s] of %objects%");
     }
 
+    private Expression<Object> holders;
+
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?>[] expressions, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        setExpr(expressions[0]);
+        holders = (Expression<Object>) expressions[0];
         return true;
     }
 
     @Override
-    protected String[] get(Event event, Object[] source) {
+    protected String[] get(Event event) {
         Set<String> allKeys = new HashSet<>();
-
-        for (Object holder : source) {
+        for (Object holder : holders.getArray(event)) {
             if (holder == null) continue;
 
             PersistentDataContainer container = PDCUtils.getContainer(holder);
@@ -40,8 +45,12 @@ public class ExprAllPDCTags extends PropertyExpression<Object, String> {
                 allKeys.add(key.toString());
             }
         }
-
         return allKeys.toArray(new String[0]);
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
     }
 
     @Override
@@ -51,6 +60,6 @@ public class ExprAllPDCTags extends PropertyExpression<Object, String> {
 
     @Override
     public String toString(@Nullable Event event, boolean debug) {
-        return "all pdc tags of " + getExpr().toString(event, debug);
+        return "all pdc tags of " + holders.toString(event, debug);
     }
 }
