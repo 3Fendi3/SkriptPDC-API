@@ -1,12 +1,10 @@
----
-
 <p align="center">
   <h1 align="center">SkriptPDC API</h1>
   <p align="center">
-    <strong>Version 2.1</strong>
+    <strong>Version 3.0</strong>
   </p>
   <p align="center">
-    <em>Advanced Persistent Data Container API for Skript</em>
+    <em>Modern Persistent Data Container API for Skript 2.14+</em>
   </p>
 </p>
 
@@ -14,31 +12,32 @@
 
 ## 📚 Overview
 
-SkriptPDC is a powerful addon for Skript that provides comprehensive support for Minecraft's Persistent Data Container (PDC) system. Store custom data on **items, blocks, entities, and even inventories** with automatic type detection and easy-to-use syntax.
+SkriptPDC is a powerful addon for Skript that provides comprehensive support for Minecraft's Persistent Data Container (PDC) system. Store custom data on **items, entities, and chunks** with automatic type detection and modern Skript 2.14 API support.
 
-### Key Features
-*   **🎯 Auto Type Detection**: Automatically detects and handles Integer, Double, Float, Long, Byte, and String types.
-*   **🍁 Complex Types**: Serializes and deserializes any other Skript type like `location`, `itemstack`, etc.
-*   **📋 List All Tags**: Retrieve all PDC keys from any object with a single expression.
-*   **🌂 Inventory Support**: Store temporary data directly on custom inventories (GUIs).
-*   **➕ Math Operations**: Add and remove numeric values directly from PDC tags.
-*   **🧹 Clean Operations**: Clear all or specific PDC tags with easy-to-use effects.
-*   **⚡ Performance**: Optimized code for fast and reliable data manipulation.
+### What's New in v3.0?
+*   **🚀 Skript 2.14 API**: Fully modernized using Skript's new registration system for better performance and stability.
+*   **🌍 Chunk Support**: Store persistent data directly on chunks for region-based systems and world management.
+*   **🎯 Auto Type Detection**: Automatically handles Integer, Double, Float, Long, Byte, String, Boolean, and complex Skript types.
+*   **📋 Tag Management**: List, check, clear, and manipulate PDC tags with intuitive expressions and effects.
+*   **➕ Math Operations**: Add and remove numeric values directly from PDC tags without manual calculations.
+*   **⚡ Optimized Performance**: Enhanced error handling and efficient code for production servers.
 
 ---
 
 ## 🚀 Installation & Setup
 
-1.  **Download:** Get the latest version of `SkriptPDC.jar`.
-2.  **Install:** Place the downloaded `.jar` file into your server's `/plugins/` directory.
-3.  **Restart:** Restart your server completely.
-4.  **Verify:** Check your server console for the startup message:
+1.  **Requirements**: Ensure you have **Skript 2.14+** installed on your server.
+2.  **Download**: Get the latest version of `SkriptPDC.jar`.
+3.  **Install**: Place the downloaded `.jar` file into your server's `/plugins/` directory.
+4.  **Restart**: Restart your server completely.
+5.  **Verify**: Check your server console for the startup message:
 
 ```
-[SkriptPDC] SkriptPDC-API v2.1 Enabled
+╔══════════════════════════════╗
+║  SkriptPDC-API v3.0 Enabled  ║
+║  Full Modern 2.14 API        ║
+╚══════════════════════════════╝
 ```
-
-**Dependencies:** You must have [Skript](https://github.com/SkriptLang/Skript/releases) installed on your server.
 
 ---
 
@@ -47,18 +46,14 @@ SkriptPDC is a powerful addon for Skript that provides comprehensive support for
 ### `Expression` PDC Tag
 > `pdc tag %string% of %objects%`
 
-**Description:** Gets or sets a PDC tag value with automatic type detection. Supports `get`, `set`, `delete`, `add`, and `remove` operations. Works with items, blocks, entities, players, inventories, and more.
+**Description:** Gets or sets a PDC tag value. Supports `get`, `set`, `delete`, `add`, and `remove` operations. Works with items, entities, and chunks.
 
 **💡 Examples:**
 ```skript
-# Set different data types on an item
+# Set different data types
 set pdc tag "myplugin:level" of player's tool to 5
 set pdc tag "myplugin:name" of player's tool to "Legendary Sword"
 set pdc tag "myplugin:damage" of player's tool to 12.5
-
-# Set data on an inventory
-set {_inv} to chest inventory with 1 row
-set pdc tag "gui:type" of {_inv} to "main_menu"
 
 # Get values
 set {_level} to pdc tag "myplugin:level" of player's tool
@@ -66,6 +61,13 @@ send "Item level: %{_level}%"
 
 # Delete tag
 delete pdc tag "myplugin:level" of player's tool
+
+# Math operations
+add 1 to pdc tag "myplugin:kills" of player
+remove 10 from pdc tag "myplugin:mana" of player
+
+# Chunk support
+set pdc tag "region:protected" of chunk at player to true
 ```
 
 ### `Expression` All PDC Tags
@@ -83,19 +85,20 @@ send "This item has %size of {_tags::*}% tags"
 loop all pdc tags of player:
     set {_value} to pdc tag loop-value of player
     send "%loop-value%: %{_value}%"
+    
+# Get chunk tags
+set {_chunkTags::*} to pdc tags of chunk at player
 ```
 
 ---
 
 ## 📝 Checking Tags (Conditions)
 
-To check if a tag exists, use the `pdc tag` expression combined with Skript's built-in `is set` / `is not set` conditions. This is the universal and most stable way to perform checks.
-
 ### `Condition` Check if Tag Exists
 > `pdc tag %string% of %objects% is set`
 > `pdc tag %string% of %objects% is not set`
 
-**Description:** Checks if an object has a specific PDC tag.
+**Description:** The standard Skript way to check if an object has a specific PDC tag.
 
 **💡 Examples:**
 ```skript
@@ -103,14 +106,13 @@ To check if a tag exists, use the `pdc tag` expression combined with Skript's bu
 if pdc tag "myplugin:special" of player's tool is set:
     send "This is a special item!"
 
-# Check if an inventory tag does NOT exist
-if pdc tag "gui:shop_menu" of player's top inventory is not set:
-    send "This is not a shop menu."
+# Check if a chunk tag is true
+if pdc tag "region:protected" of chunk at event-block is true:
+    cancel event
 ```
 
 ### `Condition` Check if PDC is Empty
 > `size of all pdc tags of %objects% is 0`
-> `size of all pdc tags of %objects% is not 0`
 
 **Description:** Checks if an object's PDC is empty (contains no tags).
 
@@ -119,10 +121,6 @@ if pdc tag "gui:shop_menu" of player's top inventory is not set:
 # Check if an item's PDC is empty
 if size of all pdc tags of player's tool is 0:
     send "This item has no custom data"
-
-# Check if a block's PDC is not empty
-if size of all pdc tags of clicked block is not 0:
-    send "This block contains custom data"
 ```
 
 ---
@@ -139,8 +137,8 @@ if size of all pdc tags of clicked block is not 0:
 # Clear all tags from an item
 clear all pdc of player's tool
 
-# Clear data from an inventory
-clear pdc from {_my_gui}
+# Clear chunk data
+clear pdc from chunk at player
 ```
 
 ### `Effect` Remove PDC Tags
@@ -154,7 +152,7 @@ clear pdc from {_my_gui}
 remove pdc tag "myplugin:temp" of player's tool
 
 # Remove multiple tags
-remove pdc tags "myplugin:level", "myplugin:exp" and "myplugin:kills" of player's tool
+remove pdc tags "myplugin:level", "myplugin:exp" from player's tool
 ```
 
 ---
@@ -163,53 +161,81 @@ remove pdc tags "myplugin:level", "myplugin:exp" and "myplugin:kills" of player'
 
 ### Example 1: Item Leveling System
 ```skript
-# Create leveling item
 command /levelitem:
     trigger:
         give player diamond sword named "&6Legendary Sword"
         set pdc tag "weapon:level" of player's tool to 1
         set pdc tag "weapon:exp" of player's tool to 0
 
-# Gain experience on kill
 on death:
-    if pdc tag "weapon:level" of attacker's tool is set:
-        add 25 to pdc tag "weapon:exp" of attacker's tool
-        
-        # Check for level up
-        set {_exp} to pdc tag "weapon:exp" of attacker's tool
-        set {_level} to pdc tag "weapon:level" of attacker's tool
-        if {_exp} >= {_level} * 100:
-            add 1 to pdc tag "weapon:level" of attacker's tool
-            set pdc tag "weapon:exp" of attacker's tool to 0
-            send "&aLevel Up!" to attacker
+    if attacker is a player:
+        if pdc tag "weapon:level" of attacker's tool is set:
+            add 25 to pdc tag "weapon:exp" of attacker's tool
+            
+            set {_exp} to pdc tag "weapon:exp" of attacker's tool
+            set {_level} to pdc tag "weapon:level" of attacker's tool
+            if {_exp} >= {_level} * 100:
+                add 1 to pdc tag "weapon:level" of attacker's tool
+                set pdc tag "weapon:exp" of attacker's tool to 0
+                send "&aLevel Up! Your weapon is now level %{_level} + 1%!" to attacker
 ```
 
 ### Example 2: Soulbound Items
 ```skript
-# Command to bind an item to the player
 command /soulbind:
     trigger:
         if player's tool is air:
-            send "&cYou must hold an item to soulbind it!"
+            send "&cYou must hold an item!"
             stop
         
         if pdc tag "soulbound:owner" of player's tool is set:
             send "&cThis item is already soulbound!"
             stop
             
-        set pdc tag "soulbound:owner" of player's tool to player's uuid
-        add "&dSoulbound to %player%" to lore of player's tool
-        send "&aYour item is now soulbound to you!"
+        set pdc tag "soulbound:owner" of player's tool to player's uuid as string
+        send "&aYour item is now soulbound!"
 
-# Prevent other players from picking up a soulbound item
 on pickup:
     if pdc tag "soulbound:owner" of event-item is set:
         set {_ownerUUID} to pdc tag "soulbound:owner" of event-item
-        if player's uuid is not {_ownerUUID}:
-            send "&cThis item is soulbound to another player."
+        if player's uuid as string is not {_ownerUUID}:
             cancel event
+            send "&cThis item belongs to someone else!"
 ```
 
+### Example 3: Protected Regions with Chunks
+```skript
+command /protectchunk:
+    trigger:
+        set {_chunk} to chunk at player
+        set pdc tag "region:protected" of {_chunk} to true
+        set pdc tag "region:owner" of {_chunk} to player's uuid as string
+        send "&aChunk protected!"
+
+on break:
+    set {_chunk} to chunk at event-block
+    if pdc tag "region:protected" of {_chunk} is true:
+        set {_owner} to pdc tag "region:owner" of {_chunk}
+        if player's uuid as string is not {_owner}:
+            cancel event
+            send "&cThis chunk is protected!"
+```
+
+### Example 4: Player Statistics
+```skript
+on death of player:
+    add 1 to pdc tag "stats:deaths" of victim
+
+on death:
+    if attacker is a player:
+        add 1 to pdc tag "stats:kills" of attacker
+
+command /stats:
+    trigger:
+        set {_kills} to pdc tag "stats:kills" of player ? 0
+        set {_deaths} to pdc tag "stats:deaths" of player ? 0
+        send "&eKills: &f%{_kills}% &7| &eDeaths: &f%{_deaths}%"
+```
 ---
 
 ## 💾 Supported Data Types
@@ -223,9 +249,10 @@ SkriptPDC intelligently handles data types. When you set a tag, the addon automa
 | Double / Float  | `number`          | `3.14159`         |
 | Long            | `number`          | `999999999`       |
 | Byte            | `number`          | `127`             |
+| Boolean         | `boolean`         | `true` / `false`  |
 
 ### Complex Data Types
-For any other Skript data type (like `location`, `itemstack`, `player`, etc.), SkriptPDC will use Skript's built-in serialization system. This converts the object into text, stores it, and deserializes it back into an object when you retrieve it.
+For any other Skript data type (like `location`, `itemstack`, etc.), SkriptPDC will use Skript's built-in serialization system. This converts the object into text, stores it, and deserializes it back into an object when you retrieve it.
 
 ```skript
 # Storing a location on a player
@@ -235,14 +262,17 @@ set {_home} to pdc tag "homes:home1" of player
 teleport player to {_home}
 ```
 
+> **Important:** When storing complex objects like players, it's recommended to store their UUID as text (`player's uuid as string`) instead of the player object itself, as player objects are temporary.
+
 ---
 
 ## ❓ FAQ & Troubleshooting
 
-### My PDC data on an item isn't saving! Why?
-This is a common issue related to how Minecraft handles item data (ItemMeta). In older versions of this addon, modifying `player's tool` could fail. This has been fixed! SkriptPDC now correctly applies changes directly to `player's tool`.
+### How do I use namespaced keys?
+Tags should ideally be in the format `namespace:key` (e.g., `myplugin:level`). The namespace prevents conflicts with other plugins. If you provide a key without a namespace (e.g., `"level"`), SkriptPDC will automatically use your script's name as the namespace.
 
-However, if you manipulate items stored in **variables** or **inventory slots**, you still need to manually apply the modified item back to its original place.
+### Why isn't my item data saving?
+When manipulating items stored in **variables** or **inventory slots**, you must manually apply the modified item back to its original place. Modifying `player's tool` handles this automatically.
 
 ```skript
 # Correct way to update an item in a specific slot
@@ -251,14 +281,41 @@ set pdc tag "myplugin:tag" of {_item} to "value"
 set slot 0 of player's inventory to {_item} # This line is crucial!
 ```
 
-### What format should my tag string be?
-Tags should ideally be in the format `namespace:key` (e.g., `myplugin:level`). The namespace prevents conflicts with other plugins. If you provide a key without a namespace (e.g., `"level"`), SkriptPDC will automatically use your plugin's name as the namespace.
+### What objects support PDC?
+SkriptPDC supports all objects that implement Bukkit's `PersistentDataHolder` interface:
+*   **Items**: `itemstack`, `itemtype`, inventory slots
+*   **Entities**: All entity types (Players, Mobs, Armor Stands, etc.)
+*   **Chunks**: World chunks for region-based data
 
-### Can I store data on inventories permanently?
-No. The inventory PDC support is designed for storing **temporary** data on GUIs while they are open. All PDC data associated with an inventory is automatically cleared from memory when the inventory is closed.
+### How do I check if a tag exists?
+The best way is to use Skript's built-in `is set` condition.
+```skript
+if pdc tag "mydata" of player's tool is set:
+    send "Tag exists!"
+else:
+    send "Tag does not exist."
+```
+
+### Can I store lists or multiple values?
+PDC stores single values per tag. For lists, you have two main options:
+1.  **Use Multiple Tags**: Create a naming convention like `homes:1`, `homes:2`, etc.
+2.  **Serialize the List**: Join the list into a single string with a delimiter, and split it when you retrieve it. Skript handles this automatically if you set a list variable to a tag.
+
+```skript
+# Skript's serialization handles this automatically
+set {_friends::*} to "Player1", "Player2" and "Player3"
+set pdc tag "friends:list" of player to {_friends::*}
+
+# Later...
+set {_retrievedFriends::*} to pdc tag "friends:list" of player
+# {_retrievedFriends::*} is now a list again
+```
 
 ---
 
 <p align="center">
-  SkriptPDC API v2.1 - Created by Fendi
+  SkriptPDC API v3.0 - Created by Fendi
+</p>
+<p align="center" style="font-size: 0.9em;">
+  <i>For convenience, the docs was generated by AI, I apologize for any errors in the examples.</i>
 </p>
