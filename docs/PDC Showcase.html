@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkriptPDC API v2.0 - Docs</title>
+    <title>SkriptPDC API v3.0 - Documentation</title>
     <style>
         * {
             margin: 0;
@@ -145,7 +145,7 @@
             margin: 15px 0;
             font-family: 'Courier New', monospace;
             font-size: 0.95em;
-            line-height: 1.5;
+            line-height: 1.8;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             white-space: pre;
         }
@@ -278,6 +278,18 @@
             font-weight: 600;
         }
 
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning-box strong {
+            color: #92400e;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -294,86 +306,86 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>SkriptPDC API</h1>
-            <div class="version">Version 2.0</div>
-            <div class="tagline">Advanced Persistent Data Container API for Skript</div>
-        </header>
+<div class="container">
+    <header>
+        <h1>SkriptPDC API</h1>
+        <div class="version">Version 3.0</div>
+        <div class="tagline">Modern Persistent Data Container API for Skript 2.14+</div>
+    </header>
 
-        <nav>
-            <a href="#overview">Overview</a>
-            <a href="#installation">Installation</a>
-            <a href="#expressions">Expressions</a>
-            <a href="#conditions">Conditions</a>
-            <a href="#effects">Effects</a>
-            <a href="#examples">Examples</a>
-            <a href="#datatypes">Data Types</a>
-            <a href="#testing">Testing</a>
-            <a href="#faq">FAQ</a>
-        </nav>
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#installation">Installation</a>
+        <a href="#expressions">Expressions</a>
+        <a href="#effects">Effects</a>
+        <a href="#examples">Examples</a>
+        <a href="#datatypes">Data Types</a>
+        <a href="#faq">FAQ</a>
+    </nav>
 
-        <!-- OVERVIEW -->
-        <section id="overview" class="section">
-            <h2>📚 Overview</h2>
-            <p>SkriptPDC is a powerful addon for Skript that provides comprehensive support for Minecraft's Persistent Data Container (PDC) system. Store custom data on items, blocks, and entities with automatic type detection and easy-to-use syntax.</p>
-            
-            <h3>What's New in v2.0?</h3>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>🎯 Auto Type Detection</h4>
-                    <p>Automatically detects and handles Integer, Double, Float, Long, Byte, and String types.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>📋 List All Tags</h4>
-                    <p>Retrieve all PDC keys from any object with a single expression.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>✓ Tag Checking</h4>
-                    <p>New conditions to check if tags exist or if PDC is empty.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>🧹 Clean Operations</h4>
-                    <p>Clear all or specific PDC tags with easy-to-use effects.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>➕ Math Operations</h4>
-                    <p>Add and remove numeric values directly from PDC tags.</p>
-                </div>
-                <div class="feature-card">
-                    <h4>⚡ Performance</h4>
-                    <p>Optimized code for faster operations and better error handling.</p>
-                </div>
+    <section id="overview" class="section">
+        <h2>📚 Overview</h2>
+        <p>SkriptPDC is a powerful addon for Skript that provides comprehensive support for Minecraft's Persistent Data Container (PDC) system. Store custom data on items, entities, and chunks with automatic type detection and modern Skript 2.14 API support.</p>
+        <br>
+        <h4>Check out our testing script! It includes examples, and you can also see if your data is correct.</h4>
+        <h3>What's New in v3.0?</h3>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🚀 Skript 2.14 API</h4>
+                <p>Fully modernized using Skript's new registration system for better performance and stability.</p>
             </div>
-        </section>
-
-        <!-- INSTALLATION -->
-        <section id="installation" class="section">
-            <h2>🚀 Installation & Setup</h2>
-            <p>Installing SkriptPDC is quick and easy. Follow these steps:</p>
-            <ol style="margin-left: 20px; margin-top: 15px;">
-                <li style="margin-bottom: 10px;"><strong>Download:</strong> Get the latest version of <a href="#" target="_blank">SkriptPDC.jar</a>.</li>
-                <li style="margin-bottom: 10px;"><strong>Install:</strong> Place the downloaded `.jar` file into your server's <code>/plugins/</code> directory.</li>
-                <li style="margin-bottom: 10px;"><strong>Restart:</strong> Restart your server completely.</li>
-                <li style="margin-bottom: 10px;"><strong>Verify:</strong> Check your server console for the startup message:</li>
-            </ol>
-            <div class="code-block"><span class="comment">[SkriptPDC] SkriptPDC-API v2.0 Enabled</span></div>
-            <p><strong>Dependencies:</strong> You must have <a href="https://github.com/SkriptLang/Skript/releases" target="_blank">Skript</a> installed on your server.</p>
-        </section>
-
-        <!-- EXPRESSIONS -->
-        <section id="expressions" class="section">
-            <h2>📝 Expressions</h2>
-
-            <h3><span class="badge badge-expression">Expression</span> PDC Tag</h3>
-            <div class="syntax">
-                pdc tag %string% of %itemtypes/blocks/entities%
+            <div class="feature-card">
+                <h4>🌍 Chunk Support</h4>
+                <p>Store persistent data directly on chunks for region-based systems and world management.</p>
             </div>
-            <p><strong>Description:</strong> Gets or sets a PDC tag value with automatic type detection. Supports GET, SET, DELETE, ADD, and REMOVE operations.</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Set different data types</span>
+            <div class="feature-card">
+                <h4>🎯 Auto Type Detection</h4>
+                <p>Automatically handles Integer, Double, Float, Long, Byte, String, and complex Skript types.</p>
+            </div>
+            <div class="feature-card">
+                <h4>📋 Tag Management</h4>
+                <p>List, check, clear, and manipulate PDC tags with intuitive expressions and effects.</p>
+            </div>
+            <div class="feature-card">
+                <h4>➕ Math Operations</h4>
+                <p>Add and remove numeric values directly from PDC tags without manual calculations.</p>
+            </div>
+            <div class="feature-card">
+                <h4>⚡ Optimized Performance</h4>
+                <p>Enhanced error handling and efficient code for production servers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation" class="section">
+        <h2>🚀 Installation & Setup</h2>
+        <p>Installing SkriptPDC is quick and easy. Follow these steps:</p>
+        <ol style="margin-left: 20px; margin-top: 15px;">
+            <li style="margin-bottom: 10px;"><strong>Requirements:</strong> Ensure you have Skript 2.14+ installed on your server.</li>
+            <li style="margin-bottom: 10px;"><strong>Download:</strong> Get the latest version of SkriptPDC.jar from releases.</li>
+            <li style="margin-bottom: 10px;"><strong>Install:</strong> Place the .jar file into your server's <code>/plugins/</code> directory.</li>
+            <li style="margin-bottom: 10px;"><strong>Restart:</strong> Restart your server completely.</li>
+            <li style="margin-bottom: 10px;"><strong>Verify:</strong> Check your server console for the startup message:</li>
+        </ol>
+        <div class="code-block">╔══════════════════════════════╗
+║  SkriptPDC-API v3.0 Enabled  ║
+║  Full Modern 2.14 API        ║
+╚══════════════════════════════╝</div>
+    </section>
+
+    <section id="expressions" class="section">
+        <h2>📝 Expressions</h2>
+
+        <h3><span class="badge badge-expression">Expression</span> PDC Tag</h3>
+        <div class="syntax">
+            pdc tag %string% of %objects%
+        </div>
+        <p><strong>Description:</strong> Gets or sets a PDC tag value with automatic type detection. Supports GET, SET, DELETE, ADD, and REMOVE operations.</p>
+        <p><strong>Supported Objects:</strong> Items (ItemStack, ItemType, Slot), Entities (all types), Chunks</p>
+
+        <div class="example-box">
+            <div class="example-title">Examples</div>
+            <div class="code-block"><span class="comment"># Set different data types</span>
 <span class="keyword">set</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool <span class="keyword">to</span> <span class="number">5</span>
 <span class="keyword">set</span> pdc tag <span class="string">"myplugin:name"</span> of player's tool <span class="keyword">to</span> <span class="string">"Legendary Sword"</span>
 <span class="keyword">set</span> pdc tag <span class="string">"myplugin:damage"</span> of player's tool <span class="keyword">to</span> <span class="number">12.5</span>
@@ -383,288 +395,294 @@
 <span class="keyword">send</span> <span class="string">"Item level: %{_level}%"</span>
 
 <span class="comment"># Delete tag</span>
-<span class="keyword">delete</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool</div>
-            </div>
+<span class="keyword">delete</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool
 
-            <h3><span class="badge badge-expression">Expression</span> All PDC Tags</h3>
-            <div class="syntax">
-                [all] [the] pdc tag[s] of %itemtypes/blocks/entities%
-            </div>
-            <p><strong>Description:</strong> Returns a list of all PDC tag keys present on an object.</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Get all tags</span>
+<span class="comment"># Math operations</span>
+<span class="keyword">add</span> <span class="number">1</span> <span class="keyword">to</span> pdc tag <span class="string">"myplugin:kills"</span> of player
+<span class="keyword">remove</span> <span class="number">10</span> <span class="keyword">from</span> pdc tag <span class="string">"myplugin:mana"</span> of player
+
+<span class="comment"># Chunk support</span>
+<span class="keyword">set</span> pdc tag <span class="string">"region:protected"</span> of chunk at player <span class="keyword">to</span> <span class="keyword">true</span></div>
+        </div>
+
+        <h3><span class="badge badge-expression">Expression</span> All PDC Tags</h3>
+        <div class="syntax">
+            [all] [the] pdc tag[s] of %objects%
+        </div>
+        <p><strong>Description:</strong> Returns a list of all PDC tag keys present on an object.</p>
+
+        <div class="example-box">
+            <div class="example-title">Examples</div>
+            <div class="code-block"><span class="comment"># Get all tags from item</span>
 <span class="keyword">set</span> {_tags::*} <span class="keyword">to</span> all pdc tags of player's tool
 <span class="keyword">send</span> <span class="string">"This item has %size of {_tags::*}% tags"</span>
 
 <span class="comment"># Loop through all tags</span>
 <span class="keyword">loop</span> all pdc tags of player's tool:
     <span class="keyword">set</span> {_value} <span class="keyword">to</span> pdc tag loop-value of player's tool
-    <span class="keyword">send</span> <span class="string">"%loop-value%: %{_value}%"</span></div>
-            </div>
-        </section>
+    <span class="keyword">send</span> <span class="string">"%loop-value%: %{_value}%"</span>
 
-        <!-- CONDITIONS -->
-        <section id="conditions" class="section">
-            <h2>✓ Conditions</h2>
+<span class="comment"># Get chunk tags</span>
+<span class="keyword">set</span> {_chunkTags::*} <span class="keyword">to</span> pdc tags of chunk at player
+<span class="keyword">loop</span> {_chunkTags::*}:
+    <span class="keyword">send</span> <span class="string">"Chunk tag: %loop-value%"</span></div>
+        </div>
+    </section>
 
-            <h3><span class="badge badge-condition">Condition</span> Has PDC Tag</h3>
-            <div class="syntax">
-                %itemtype/block/entity% has pdc [tag] %string%<br>
-                %itemtype/block/entity% doesn't have pdc [tag] %string%
-            </div>
-            <p><strong>Description:</strong> Checks if an object has a specific PDC tag.</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Check if tag exists</span>
-<span class="keyword">if</span> player's tool has pdc tag <span class="string">"myplugin:special"</span>:
-    <span class="keyword">send</span> <span class="string">"This is a special item!"</span>
+    <section id="effects" class="section">
+        <h2>⚙️ Effects</h2>
 
-<span class="comment"># Negative check</span>
-<span class="keyword">if</span> player's tool doesn't have pdc tag <span class="string">"myplugin:cursed"</span>:
-    <span class="keyword">send</span> <span class="string">"This item is not cursed"</span></div>
-            </div>
+        <h3><span class="badge badge-effect">Effect</span> Clear PDC</h3>
+        <div class="syntax">
+            clear [all] pdc (of|from) %objects%
+        </div>
+        <p><strong>Description:</strong> Removes all PDC tags from an object.</p>
 
-            <h3><span class="badge badge-condition">Condition</span> PDC Is Empty</h3>
-            <div class="syntax">
-                [the] pdc of %itemtype/block/entity% is empty<br>
-                [the] pdc of %itemtype/block/entity% isn't empty
-            </div>
-            <p><strong>Description:</strong> Checks if an object's PDC is empty (contains no tags).</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Check if empty</span>
-<span class="keyword">if</span> pdc of player's tool <span class="keyword">is</span> empty:
-    <span class="keyword">send</span> <span class="string">"This item has no custom data"</span>
-
-<span class="comment"># Check if not empty</span>
-<span class="keyword">if</span> pdc of clicked block isn't empty:
-    <span class="keyword">send</span> <span class="string">"This block contains custom data"</span></div>
-            </div>
-        </section>
-
-        <!-- EFFECTS -->
-        <section id="effects" class="section">
-            <h2>⚙️ Effects</h2>
-
-            <h3><span class="badge badge-effect">Effect</span> Clear PDC</h3>
-            <div class="syntax">
-                clear [all] pdc (of|from) %itemtypes/blocks/entities%
-            </div>
-            <p><strong>Description:</strong> Removes all PDC tags from an object.</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Clear all tags from item</span>
+        <div class="example-box">
+            <div class="example-title">Examples</div>
+            <div class="code-block"><span class="comment"># Clear all tags from item</span>
 <span class="keyword">clear</span> all pdc of player's tool
 
-<span class="comment"># Clear block data</span>
-<span class="keyword">clear</span> pdc from clicked block</div>
-            </div>
+<span class="comment"># Clear entity data</span>
+<span class="keyword">clear</span> pdc from last spawned entity
 
-            <h3><span class="badge badge-effect">Effect</span> Remove PDC Tags</h3>
-            <div class="syntax">
-                (remove|delete) pdc tag[s] %strings% (of|from) %itemtypes/blocks/entities%
-            </div>
-            <p><strong>Description:</strong> Removes one or more specific PDC tags from an object.</p>
-            
-            <div class="example-box">
-                <div class="example-title">Examples</div>
-                <div class="code-block"><span class="comment"># Remove single tag</span>
+<span class="comment"># Clear chunk data</span>
+<span class="keyword">clear</span> pdc of chunk at player</div>
+        </div>
+
+        <h3><span class="badge badge-effect">Effect</span> Remove PDC Tags</h3>
+        <div class="syntax">
+            (remove|delete) pdc tag[s] %strings% (of|from) %objects%
+        </div>
+        <p><strong>Description:</strong> Removes one or more specific PDC tags from an object.</p>
+
+        <div class="example-box">
+            <div class="example-title">Examples</div>
+            <div class="code-block"><span class="comment"># Remove single tag</span>
 <span class="keyword">remove</span> pdc tag <span class="string">"myplugin:temp"</span> of player's tool
 
-<span class="comment"># Remove multiple tags</span>
-<span class="keyword">remove</span> pdc tags <span class="string">"myplugin:level"</span>, <span class="string">"myplugin:exp"</span> and <span class="string">"myplugin:kills"</span> of player's tool</div>
-            </div>
-        </section>
+<span class="comment"># Remove chunk tag</span>
+<span class="keyword">delete</span> pdc tag <span class="string">"region:owner"</span> of chunk at player
 
-        <!-- EXAMPLES -->
-        <section id="examples" class="section">
-            <h2>💡 Usage Examples</h2>
+<span class="comment"># Remove multiple tags using list</span>
+<span class="keyword">set</span> {_tags::*} <span class="keyword">to</span> <span class="string">"myplugin:level"</span>, <span class="string">"myplugin:exp"</span> and <span class="string">"myplugin:kills"</span>
+<span class="keyword">remove</span> pdc tags {_tags::*} of player's tool</div>
+        </div>
+    </section>
 
-            <h3>Example 1: Item Leveling System</h3>
-            <div class="code-block"><span class="comment"># Create leveling item</span>
-<span class="keyword">command</span> /levelitem:
+    <section id="examples" class="section">
+        <h2>💡 Usage Examples</h2>
+
+        <h3>Example 1: Item Leveling System</h3>
+        <div class="code-block"><span class="keyword">command</span> /levelitem:
     <span class="keyword">trigger</span>:
         <span class="keyword">give</span> player diamond sword named <span class="string">"&6Legendary Sword"</span>
         <span class="keyword">set</span> pdc tag <span class="string">"weapon:level"</span> of player's tool <span class="keyword">to</span> <span class="number">1</span>
         <span class="keyword">set</span> pdc tag <span class="string">"weapon:exp"</span> of player's tool <span class="keyword">to</span> <span class="number">0</span>
 
-<span class="comment"># Gain experience on kill</span>
 <span class="keyword">on</span> death:
     <span class="keyword">if</span> attacker's tool has pdc tag <span class="string">"weapon:level"</span>:
         <span class="keyword">add</span> <span class="number">25</span> <span class="keyword">to</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool
         
-        <span class="comment"># Check for level up</span>
         <span class="keyword">set</span> {_exp} <span class="keyword">to</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool
         <span class="keyword">set</span> {_level} <span class="keyword">to</span> pdc tag <span class="string">"weapon:level"</span> of attacker's tool
         <span class="keyword">if</span> {_exp} >= {_level} * <span class="number">100</span>:
             <span class="keyword">add</span> <span class="number">1</span> <span class="keyword">to</span> pdc tag <span class="string">"weapon:level"</span> of attacker's tool
             <span class="keyword">set</span> pdc tag <span class="string">"weapon:exp"</span> of attacker's tool <span class="keyword">to</span> <span class="number">0</span>
-            <span class="keyword">send</span> <span class="string">"&aLevel Up!"</span> <span class="keyword">to</span> attacker</div>
+            <span class="keyword">send</span> <span class="string">"&aLevel Up! Your weapon is now level %{_level} + 1%"</span> <span class="keyword">to</span> attacker</div>
 
-<h3>Example 2: Soulbound Items</h3>
-            <div class="code-block"><span class="comment"># Command to bind an item to the player</span>
-<span class="keyword">command</span> /soulbind:
+        <h3>Example 2: Soulbound Items</h3>
+        <div class="code-block"><span class="keyword">command</span> /soulbind:
     <span class="keyword">trigger</span>:
         <span class="keyword">if</span> player's tool is air:
-            <span class="keyword">send</span> <span class="string">"&cYou must hold an item to soulbind it!"</span>
+            <span class="keyword">send</span> <span class="string">"&cYou must hold an item!"</span>
             <span class="keyword">stop</span>
         
         <span class="keyword">if</span> player's tool has pdc tag <span class="string">"soulbound:owner"</span>:
             <span class="keyword">send</span> <span class="string">"&cThis item is already soulbound!"</span>
             <span class="keyword">stop</span>
-            
-        <span class="keyword">set</span> pdc tag <span class="string">"soulbound:owner"</span> of player's tool <span class="keyword">to</span> player's uuid
-        <span class="keyword">add</span> <span class="string">"&dSoulbound to %player%"</span> to lore of player's tool
-        <span class="keyword">send</span> <span class="string">"&aYour item is now soulbound to you!"</span>
+        
+        <span class="keyword">set</span> pdc tag <span class="string">"soulbound:owner"</span> of player's tool <span class="keyword">to</span> <span class="string">"%player's uuid%"</span>
+        <span class="keyword">send</span> <span class="string">"&aYour item is now soulbound!"</span>
 
-<span class="comment"># Prevent other players from picking up a soulbound item</span>
 <span class="keyword">on</span> pickup:
     <span class="keyword">if</span> event-item has pdc tag <span class="string">"soulbound:owner"</span>:
-        <span class="keyword">set</span> {_ownerUUID} <span class="keyword">to</span> pdc tag <span class="string">"soulbound:owner"</span> of event-item
-        <span class="keyword">if</span> player's uuid <span class="keyword">is not</span> {_ownerUUID}:
-            <span class="keyword">send</span> <span class="string">"&cThis item is soulbound to another player."</span>
-            <span class="keyword">cancel event</span></div>
-        </section>
-        <!-- DATA TYPES -->
-        <section id="datatypes" class="section">
-            <h2>💾 Supported Data Types</h2>
-            <p>SkriptPDC intelligently handles data types for you. When you set a tag, the addon automatically detects the type and stores it using the most appropriate format. When you retrieve the tag, it's returned as the correct Skript type.</p>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data Type</th>
-                        <th>Skript Equivalent</th>
-                        <th>Example Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>String</td>
-                        <td><span class="type-badge">text</span></td>
-                        <td><code>"Hello World"</code></td>
-                    </tr>
-                    <tr>
-                        <td>Integer</td>
-                        <td><span class="type-badge">integer</span></td>
-                        <td><code>42</code></td>
-                    </tr>
-                    <tr>
-                        <td>Double / Float</td>
-                        <td><span class="type-badge">number</span></td>
-                        <td><code>3.14159</code></td>
-                    </tr>
-                    <tr>
-                        <td>Long</td>
-                        <td><span class="type-badge">number</span></td>
-                        <td><code>999999999</code></td>
-                    </tr>
-                    <tr>
-                        <td>Byte</td>
-                        <td><span class="type-badge">number</span></td>
-                        <td><code>127</code></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h3>Complex Data Types</h3>
-            <p>For any other Skript data type (like <span class="type-badge">location</span>, <span class="type-badge">itemstack</span>, <span class="type-badge">player</span>, etc.), SkriptPDC will use Skript's built-in serialization system. This converts the object into text, stores it, and deserializes it back into an object when you retrieve it.</p>
-            <div class="code-block"><span class="comment"># Storing a location</span>
-<span class="keyword">set</span> pdc tag <span class="string">"homes:home1"</span> of player <span class="keyword">to</span> player's location
-<span class="comment"># ... later</span>
-<span class="keyword">set</span> {_home} <span class="keyword">to</span> pdc tag <span class="string">"homes:home1"</span> of player
+        <span class="keyword">set</span> {_owner} <span class="keyword">to</span> pdc tag <span class="string">"soulbound:owner"</span> of event-item
+        <span class="keyword">if</span> <span class="string">"%player's uuid%"</span> <span class="keyword">is not</span> {_owner}:
+            <span class="keyword">cancel event</span>
+            <span class="keyword">send</span> <span class="string">"&cThis item belongs to someone else!"</span></div>
+
+        <h3>Example 3: Protected Regions with Chunks</h3>
+        <div class="code-block"><span class="keyword">command</span> /protectchunk:
+    <span class="keyword">trigger</span>:
+        <span class="keyword">set</span> {_chunk} <span class="keyword">to</span> chunk at player
+        <span class="keyword">set</span> pdc tag <span class="string">"region:protected"</span> of {_chunk} <span class="keyword">to</span> <span class="keyword">true</span>
+        <span class="keyword">set</span> pdc tag <span class="string">"region:owner"</span> of {_chunk} <span class="keyword">to</span> <span class="string">"%player's uuid%"</span>
+        <span class="keyword">send</span> <span class="string">"&aChunk protected!"</span>
+
+<span class="keyword">on</span> break:
+    <span class="keyword">set</span> {_chunk} <span class="keyword">to</span> chunk at event-block
+    <span class="keyword">if</span> pdc tag <span class="string">"region:protected"</span> of {_chunk} <span class="keyword">is</span> <span class="keyword">true</span>:
+        <span class="keyword">set</span> {_owner} <span class="keyword">to</span> pdc tag <span class="string">"region:owner"</span> of {_chunk}
+        <span class="keyword">if</span> <span class="string">"%player's uuid%"</span> <span class="keyword">is not</span> {_owner}:
+            <span class="keyword">cancel event</span>
+            <span class="keyword">send</span> <span class="string">"&cThis chunk is protected!"</span></div>
+
+        <h3>Example 4: Player Statistics</h3>
+        <div class="code-block"><span class="keyword">on</span> death of player:
+    <span class="keyword">add</span> <span class="number">1</span> <span class="keyword">to</span> pdc tag <span class="string">"stats:deaths"</span> of victim
+
+<span class="keyword">on</span> death:
+    <span class="keyword">if</span> attacker is a player:
+        <span class="keyword">add</span> <span class="number">1</span> <span class="keyword">to</span> pdc tag <span class="string">"stats:kills"</span> of attacker
+
+<span class="keyword">command</span> /stats:
+    <span class="keyword">trigger</span>:
+        <span class="keyword">set</span> {_kills} <span class="keyword">to</span> pdc tag <span class="string">"stats:kills"</span> of player <span class="keyword">?</span> <span class="number">0</span>
+        <span class="keyword">set</span> {_deaths} <span class="keyword">to</span> pdc tag <span class="string">"stats:deaths"</span> of player <span class="keyword">?</span> <span class="number">0</span>
+        <span class="keyword">send</span> <span class="string">"&eKills: &f%{_kills}% &7| &eDeaths: &f%{_deaths}%"</span></div>
+    </section>
+
+    <section id="datatypes" class="section">
+        <h2>💾 Supported Data Types</h2>
+        <p>SkriptPDC intelligently handles data types for you. When you set a tag, the addon automatically detects the type and stores it using the most appropriate format.</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Data Type</th>
+                <th>Skript Type</th>
+                <th>Example</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>String</td>
+                <td><span class="type-badge">text</span></td>
+                <td><code>"Hello World"</code></td>
+            </tr>
+            <tr>
+                <td>Integer</td>
+                <td><span class="type-badge">integer</span></td>
+                <td><code>42</code></td>
+            </tr>
+            <tr>
+                <td>Double</td>
+                <td><span class="type-badge">number</span></td>
+                <td><code>3.14159</code></td>
+            </tr>
+            <tr>
+                <td>Float</td>
+                <td><span class="type-badge">number</span></td>
+                <td><code>2.5</code></td>
+            </tr>
+            <tr>
+                <td>Long</td>
+                <td><span class="type-badge">number</span></td>
+                <td><code>999999999</code></td>
+            </tr>
+            <tr>
+                <td>Byte</td>
+                <td><span class="type-badge">number</span></td>
+                <td><code>127</code></td>
+            </tr>
+            <tr>
+                <td>Boolean</td>
+                <td><span class="type-badge">boolean</span></td>
+                <td><code>true</code> / <code>false</code></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Complex Data Types</h3>
+        <p>For any other Skript data type (like <span class="type-badge">location</span>, <span class="type-badge">itemstack</span>, etc.), SkriptPDC uses Skript's serialization system to store and retrieve the data.</p>
+        <div class="code-block"><span class="comment"># Storing a location</span>
+<span class="keyword">set</span> pdc tag <span class="string">"homes:spawn"</span> of player <span class="keyword">to</span> player's location
+
+<span class="comment"># Retrieving and using the location</span>
+<span class="keyword">set</span> {_home} <span class="keyword">to</span> pdc tag <span class="string">"homes:spawn"</span> of player
 <span class="keyword">teleport</span> player <span class="keyword">to</span> {_home}</div>
-        </section>
 
-        <!-- TESTING -->
-        <section id="testing" class="section">
-            <h2>🔬 Testing & Debugging</h2>
-            <p>To help you get started and verify that everything is working correctly, you can use the provided <a href="#">pdctest.sk</a>. This file contains a suite of commands to test all features of the addon and monitor PDC data in real-time.</p>
-            
-            <h3>Test Suite Command</h3>
-            <p>The <code>/pdctest</code> command allows you to run various tests on an item you are holding.</p>
-            <div class="code-block"><span class="keyword">command</span> /pdctest [<text>]:
-    <span class="comment"># ...</span>
-    <span class="string">/pdctest all</span> - Run all tests
-    <span class="string">/pdctest types</span> - Test different data types
-    <span class="string">/pdctest conditions</span> - Test conditions
-    <span class="string">/pdctest effects</span> - Test effects
-    <span class="string">/pdctest math</span> - Test math operations
-    <span class="string">/pdctest cleanup</span> - Clean up all test tags</div>
+        <div class="warning-box">
+            <strong>Important:</strong> When storing complex objects like players, it's recommended to store their UUID as text instead of the player object itself, as player objects are temporary snapshots.
+        </div>
+    </section>
 
-            <h3>PDC Monitor Command</h3>
-            <p>The <code>/pdcmonitor</code> command is an incredibly useful tool for debugging. Hold an item in your hand and run the command to see all of its PDC tags, values, and data types.</p>
-            <div class="example-box">
-                <div class="example-title">/pdcmonitor Output Example</div>
-                <div class="code-block">
-&6&l════════════════════════════════
-&e&lPDC Monitor - Current Data
-&6&l════════════════════════════════
+    <section id="faq" class="section">
+        <h2>❓ FAQ & Troubleshooting</h2>
 
-&eTag count: &f2
+        <h3>How do I use namespaced keys?</h3>
+        <p>PDC tags should follow the format <code>namespace:key</code>. If you omit the namespace, SkriptPDC will automatically use your plugin's namespace. For example:</p>
+        <div class="code-block"><span class="comment"># These are equivalent:</span>
+<span class="keyword">set</span> pdc tag <span class="string">"level"</span> of player's tool <span class="keyword">to</span> <span class="number">5</span>
+<span class="keyword">set</span> pdc tag <span class="string">"skriptpdc:level"</span> of player's tool <span class="keyword">to</span> <span class="number">5</span>
 
-&eAll tags:
-  &7• &eweapon:level
-    &7└─ &fValue: 5
-    &7└─ &fType: integer
+<span class="comment"># Use custom namespace:</span>
+<span class="keyword">set</span> pdc tag <span class="string">"myplugin:level"</span> of player's tool <span class="keyword">to</span> <span class="number">5</span></div>
 
-  &7• &eweapon:name
-    &7└─ &fValue: Legendary Sword
-    &7└─ &fType: text
+        <h3>Can I store data on chunks?</h3>
+        <p>Yes! Version 3.0 adds full support for storing PDC data on chunks. This is perfect for region protection, claim systems, or world management features.</p>
+        <div class="code-block"><span class="comment"># Store data on chunk</span>
+<span class="keyword">set</span> pdc tag <span class="string">"region:name"</span> of chunk at player <span class="keyword">to</span> <span class="string">"Spawn Area"</span>
 
-&6&l════════════════════════════════
-                </div>
-            </div>
-        </section>
+<span class="comment"># Retrieve chunk data</span>
+<span class="keyword">set</span> {_name} <span class="keyword">to</span> pdc tag <span class="string">"region:name"</span> of chunk at player</div>
 
-        <!-- FAQ -->
-        <section id="faq" class="section">
-            <h2>❓ FAQ & Troubleshooting</h2>
+        <h3>Why isn't my item data saving?</h3>
+        <p>When working with items in variables or specific slots, you must update the slot after modifying PDC data:</p>
+        <div class="code-block"><span class="comment"># Incorrect - changes won't save:</span>
+<span class="keyword">set</span> {_item} <span class="keyword">to</span> slot <span class="number">0</span> of player's inventory
+<span class="keyword">set</span> pdc tag <span class="string">"mydata"</span> of {_item} <span class="keyword">to</span> <span class="string">"value"</span>
 
-            <h3>My PDC data on an item isn't saving! Why?</h3>
-            <p>This is a common issue related to how Minecraft handles item data (ItemMeta). When you modify an item's data, you are modifying a copy. You need to apply that copy back to the original item slot. SkriptPDC handles this for you when using <code>player's tool</code>, but if you're manipulating items in variables or inventories, you may need to manually update it.</p>
-            <div class="code-block"><span class="comment"># Correct way to update an item in a specific slot</span>
-<span class="keyword">set</span> {_item} <span class="keyword">to</span> slot 0 of player's inventory
-<span class="keyword">set</span> pdc tag <span class="string">"myplugin:tag"</span> of {_item} <span class="keyword">to</span> <span class="string">"value"</span>
-<span class="keyword">set</span> slot 0 of player's inventory <span class="keyword">to</span> {_item} <span class="comment"># This line is crucial!</span></div>
+<span class="comment"># Correct - update the slot:</span>
+<span class="keyword">set</span> {_item} <span class="keyword">to</span> slot <span class="number">0</span> of player's inventory
+<span class="keyword">set</span> pdc tag <span class="string">"mydata"</span> of {_item} <span class="keyword">to</span> <span class="string">"value"</span>
+<span class="keyword">set</span> slot <span class="number">0</span> of player's inventory <span class="keyword">to</span> {_item}
 
-            <h3>What format should my tag string be?</h3>
-            <p>Tags must be in the format <code>namespace:key</code>. For example, <code>myplugin:level</code>. The namespace (<code>myplugin</code>) prevents conflicts with other plugins. The key (<code>level</code>) is the specific name of your data. Using a unique namespace for your server or plugin is highly recommended.</p>
+<span class="comment"># Using player's tool handles this automatically:</span>
+<span class="keyword">set</span> pdc tag <span class="string">"mydata"</span> of player's tool <span class="keyword">to</span> <span class="string">"value"</span></div>
 
-            <h3>Can I store complex objects like a player or a location?</h3>
-            <p>Yes. As mentioned in the Data Types section, SkriptPDC will automatically serialize any Skript type it doesn't handle natively. However, be aware that this stores a "snapshot" of the data at that moment. For things like players, it is often better to store their UUID as a string and retrieve the player object later.
-            </p>
-        </section>
+        <h3>What objects support PDC?</h3>
+        <p>SkriptPDC supports all objects that implement Bukkit's PersistentDataHolder interface:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li><strong>Items:</strong> ItemStack, ItemType, Inventory Slots</li>
+            <li><strong>Entities:</strong> All entity types (Players, Mobs, Armor Stands, etc.)</li>
+            <li><strong>Chunks:</strong> World chunks for region-based data</li>
+        </ul>
 
-        <footer>
-            <p>SkriptPDC API v2.0 - Created with ❤️ by Fendi</p>
-        </footer>
+        <h3>How do I check if a tag exists?</h3>
+        <p>You can check by attempting to retrieve the tag and testing if it's set:</p>
+        <div class="code-block"><span class="comment"># Check if tag exists</span>
+<span class="keyword">set</span> {_value} <span class="keyword">to</span> pdc tag <span class="string">"mydata"</span> of player's tool
+<span class="keyword">if</span> {_value} is set:
+    <span class="keyword">send</span> <span class="string">"Tag exists with value: %{_value}%"</span>
+<span class="keyword">else</span>:
+    <span class="keyword">send</span> <span class="string">"Tag does not exist"</span>
 
-    </div>
+<span class="comment"># Alternative using otherwise</span>
+<span class="keyword">set</span> {_value} <span class="keyword">to</span> pdc tag <span class="string">"mydata"</span> of player's tool <span class="keyword">otherwise</span> <span class="string">"default"</span></div>
+
+        <h3>Can I store lists or multiple values?</h3>
+        <p>PDC stores single values per tag. For lists, you can either:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>Use multiple tags: <code>myplugin:value1</code>, <code>myplugin:value2</code>, etc.</li>
+            <li>Serialize a list as text (join with delimiter)</li>
+            <li>Store complex objects using Skript's serialization</li>
+        </ul>
+        <div class="code-block"><span class="comment"># Example: Multiple tags approach</span>
+<span class="keyword">set</span> pdc tag <span class="string">"homes:home1"</span> of player <span class="keyword">to</span> player's location
+<span class="keyword">set</span> pdc tag <span class="string">"homes:home2"</span> of player <span class="keyword">to</span> location(<span class="number">100</span>, <span class="number">64</span>, <span class="number">200</span>, world <span class="string">"world"</span>)
+
+<span class="comment"># Example: Serialized list</span>
+<span class="keyword">set</span> {_friends::*} <span class="keyword">to</span> <span class="string">"Player1"</span>, <span class="string">"Player2"</span> and <span class="string">"Player3"</span>
+<span class="keyword">set</span> pdc tag <span class="string">"friends:list"</span> of player <span class="keyword">to</span> {_friends::*} <span class="string"></span></div>
+    </section>
+
+    <footer>
+        <p>SkriptPDC API v3.0 - Built for Skript 2.14+ | Created with ❤️ by Fendi</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">Modern API | Full Chunk Support | Production Ready</p>
+        <p>For convenience, the docs was generated by AI, I apologize for any errors in the examples.</p>
+    </footer>
+</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

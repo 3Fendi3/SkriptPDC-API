@@ -1,7 +1,0 @@
-me\fendi\skriptPDCAPI\SkriptPDC.class
-me\fendi\skriptPDCAPI\expressions\ExprPDC.class
-me\fendi\skriptPDCAPI\expressions\ExprAllPDCTags.class
-me\fendi\skriptPDCAPI\effects\EffClearPDC.class
-me\fendi\skriptPDCAPI\utils\PDCUtils.class
-me\fendi\skriptPDCAPI\listeners\InventoryCleanupListener.class
-me\fendi\skriptPDCAPI\expressions\ExprPDC$1.class

@@ -1,11 +1,9 @@
 package me.fendi.skriptPDCAPI.expressions;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
-import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.Kleenean;
 import me.fendi.skriptPDCAPI.utils.PDCUtils;
@@ -23,11 +21,6 @@ import java.util.List;
 import static ch.njol.util.StringUtils.hexStringToByteArray;
 
 public class ExprPDC extends SimpleExpression<Object> {
-
-    static {
-        Skript.registerExpression(ExprPDC.class, Object.class, ExpressionType.COMBINED,
-                "pdc tag %string% of %objects%");
-    }
 
     private Expression<String> tag;
     private Expression<Object> holders;
@@ -157,20 +150,14 @@ public class ExprPDC extends SimpleExpression<Object> {
     }
 
     private void setPDCValue(PersistentDataContainer container, NamespacedKey key, Object value) {
-        if (value instanceof Integer) {
-            container.set(key, PersistentDataType.INTEGER, (Integer) value);
-        } else if (value instanceof Double) {
-            container.set(key, PersistentDataType.DOUBLE, (Double) value);
-        } else if (value instanceof Long) {
-            container.set(key, PersistentDataType.LONG, (Long) value);
-        } else if (value instanceof Float) {
-            container.set(key, PersistentDataType.FLOAT, (Float) value);
-        } else if (value instanceof Byte) {
-            container.set(key, PersistentDataType.BYTE, (Byte) value);
-        } else if (value instanceof String) {
-            container.set(key, PersistentDataType.STRING, (String) value);
-        } else {
-            container.set(key, PersistentDataType.STRING, serialize(value));
+        switch (value) {
+            case Integer i -> container.set(key, PersistentDataType.INTEGER, i);
+            case Double v -> container.set(key, PersistentDataType.DOUBLE, v);
+            case Long l -> container.set(key, PersistentDataType.LONG, l);
+            case Float v -> container.set(key, PersistentDataType.FLOAT, v);
+            case Byte b -> container.set(key, PersistentDataType.BYTE, b);
+            case String s -> container.set(key, PersistentDataType.STRING, s);
+            case null, default -> container.set(key, PersistentDataType.STRING, serialize(value));
         }
     }
 

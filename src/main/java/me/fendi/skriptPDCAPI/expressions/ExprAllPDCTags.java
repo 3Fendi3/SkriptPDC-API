@@ -1,10 +1,8 @@
 package me.fendi.skriptPDCAPI.expressions;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
-import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import me.fendi.skriptPDCAPI.utils.PDCUtils;
 import org.bukkit.NamespacedKey;
@@ -16,11 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ExprAllPDCTags extends SimpleExpression<String> {
-
-    static {
-        Skript.registerExpression(ExprAllPDCTags.class, String.class, ExpressionType.COMBINED,
-                "[all] [the] pdc tag[s] of %objects%");
-    }
 
     private Expression<Object> holders;
 

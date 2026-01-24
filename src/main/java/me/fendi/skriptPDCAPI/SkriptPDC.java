@@ -1,12 +1,8 @@
 package me.fendi.skriptPDCAPI;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.SkriptAddon;
-import me.fendi.skriptPDCAPI.listeners.InventoryCleanupListener;
-import me.fendi.skriptPDCAPI.utils.PDCUtils;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.IOException;
+import org.skriptlang.skript.addon.SkriptAddon;
+import me.fendi.skriptPDCAPI.registration.PDCModule;
 
 public final class SkriptPDC extends JavaPlugin {
 
@@ -16,33 +12,18 @@ public final class SkriptPDC extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        addon = Skript.registerAddon(this);
+        addon = ch.njol.skript.Skript.instance().registerAddon(getClass(), getName());
+        addon.loadModules(new PDCModule());
 
-        try {
-            addon.loadClasses("me.fendi.skriptPDCAPI", "expressions");
-            addon.loadClasses("me.fendi.skriptPDCAPI", "effects");
-
-            getServer().getPluginManager().registerEvents(
-                    new InventoryCleanupListener(),
-                    this
-            );
-
-            getLogger().info("╔══════════════════════════════╗");
-            getLogger().info("║  SkriptPDC-API v2.1 Enabled  ║");
-            getLogger().info("║  Enhanced PDC Support        ║");
-            getLogger().info("╚══════════════════════════════╝");
-            logFeatures();
-
-        } catch (IOException e) {
-            getLogger().severe("Failed to load SkriptPDC classes!");
-            e.printStackTrace();
-            getServer().getPluginManager().disablePlugin(this);
-        }
+        getLogger().info("╔══════════════════════════════╗");
+        getLogger().info("║  SkriptPDC-API v3.0 Enabled  ║");
+        getLogger().info("║  2.14 SUPPORT !!!            ║");
+        getLogger().info("╚══════════════════════════════╝");
+        logFeatures();
     }
 
     @Override
     public void onDisable() {
-        PDCUtils.clearAllInventoryPDC();
         getLogger().info("SkriptPDC-API has been disabled!");
     }
 
@@ -53,7 +34,7 @@ public final class SkriptPDC extends JavaPlugin {
         getLogger().info("  • Check if tags exist");
         getLogger().info("  • Clear PDC data");
         getLogger().info("  • Add/Remove numeric values");
-        getLogger().info("  • Support for Items, Blocks, Entities AND Inventories");
+        getLogger().info("  • Support for Items, Entities AND Chunks");
     }
 
     public static SkriptPDC getInstance() {

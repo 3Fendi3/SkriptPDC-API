@@ -1,6 +1,5 @@
 package me.fendi.skriptPDCAPI.effects;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -13,12 +12,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 public class EffClearPDC extends Effect {
-
-    static {
-        Skript.registerEffect(EffClearPDC.class,
-                "clear [all] pdc (of|from) %objects%",
-                "(remove|delete) pdc tag[s] %strings% (of|from) %objects%");
-    }
 
     private Expression<Object> holders;
     private Expression<String> tags;
